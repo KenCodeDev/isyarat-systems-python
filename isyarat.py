@@ -1,7 +1,7 @@
 # ============================
 # NOTES
 # ============================
-# File        : isyarat.py
+# File        : main.py
 # Author      : Kenichi Ichi
 # Description : Sistem deteksi isyarat tangan dengan subtitle dan text-to-speech
 # Python      : 3.11.9
@@ -10,6 +10,58 @@
 # WAJIB MENGGUNAKAN PYTHON 3.9 - 3.11
 # JIKA MENGGUNAKAN VERSI DI ATAS 3.11 DAN DIBAWAH 3.9, BISA JADI TERJADI ERROR PADA LIBRARY TERTENTU!
 # ============================
+
+import sys
+
+# ============================
+# VALIDASI PYTHON VERSION
+# ============================
+MIN_VER = (3, 9)
+MAX_VER = (3, 11)
+
+current_ver = sys.version_info
+
+if not (MIN_VER <= (current_ver.major, current_ver.minor) <= MAX_VER):
+    print("============================================")
+    print(" ❌ PYTHON VERSION TIDAK KOMPATIBEL")
+    print("============================================")
+    print(f"Versi kamu sekarang : Python {current_ver.major}.{current_ver.minor}.{current_ver.micro}")
+    print("Script ini hanya kompatibel dengan Python 3.9 sampai 3.11 saja.")
+    print("Silakan ganti versi Python kamu, lalu coba lagi.")
+    print("============================================")
+    sys.exit(1)
+
+# ============================
+# VALIDASI LIBRARY
+# ============================
+required_libs = [
+    ("cv2", "opencv-python"),
+    ("mediapipe", "mediapipe"),
+    ("numpy", "numpy"),
+    ("gtts", "gTTS"),
+    ("pygame", "pygame")
+]
+
+missing = []
+
+for module, pip_name in required_libs:
+    try:
+        __import__(module)
+    except ImportError:
+        missing.append(pip_name)
+
+if missing:
+    print("============================================")
+    print(" ❌ ADA LIBRARY YANG BELUM TERINSTALL")
+    print("============================================")
+    print("Library yang hilang:")
+    for lib in missing:
+        print(f" - {lib}")
+    print("\nSilakan install dengan perintah:")
+    print("pip install " + " ".join(missing))
+    print("============================================")
+    sys.exit(1)
+
 
 import cv2
 import mediapipe as mp
@@ -44,7 +96,18 @@ warna_author_teks = (255, 255, 0)  # FORMAT WAJIB BGR (BUKAN RGB), GUNAKAN py to
 TTS_DIR = "tts_temp_(auto_delete)"
 os.makedirs(TTS_DIR, exist_ok=True)
 
-pygame.mixer.init()
+try:
+    pygame.mixer.init()
+except Exception as e:
+    print("============================================")
+    print(" ❌ GAGAL INIT AUDIO (pygame.mixer)")
+    print("============================================")
+    print("Error:", e)
+    print("Kemungkinan besar audio device kamu bermasalah atau ter-block.")
+    print("Coba restart PC atau update driver audio.")
+    print("============================================")
+    sys.exit(1)
+
 last_spoken = ""
 
 def speak(text):
@@ -103,6 +166,16 @@ face = mp_face.FaceDetection(model_selection=0, min_detection_confidence=0.5)
 # CAMERA INIT
 # ============================
 cap = cv2.VideoCapture(0)
+
+if not cap.isOpened():
+    print("============================================")
+    print(" ❌ KAMERA TIDAK TERDETEKSI")
+    print("============================================")
+    print("Pastikan webcam tidak dipakai aplikasi lain.")
+    print("Pastikan izin kamera diizinkan (Windows / macOS).")
+    print("============================================")
+    sys.exit(1)
+
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 cap.set(cv2.CAP_PROP_FPS, 30)
