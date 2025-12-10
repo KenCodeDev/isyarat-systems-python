@@ -77,12 +77,18 @@ Menjadi format **BGR**, yang digunakan oleh OpenCV.
 1. Pastikan pakai **Python 3.9 - 3.11**
 2. Install library yang diperlukan:
 
-`bash\pip install opencv-python mediapipe pygame gTTS numpy`
+```bash
+pip install opencv-python mediapipe pygame gTTS numpy
+```
 
 3. Jalankan program:
 
 ```bash
-python isyarat.py
+py main.py
+```
+atau
+```bash
+python main.py
 ```
 
 ---
