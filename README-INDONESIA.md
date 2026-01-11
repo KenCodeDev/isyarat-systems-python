@@ -1,4 +1,5 @@
 # Isyarat Systems
+[🇺🇸 English](README.md)
 
 **Isyarat Systems** adalah sebuah program Python yang berfungsi sebagai **sistem deteksi isyarat tangan** menggunakan kamera secara real-time. Program ini mampu:
 
@@ -76,7 +77,7 @@ Menjadi format **BGR**, yang digunakan oleh OpenCV.
 
 1. Pastikan pakai **Python 3.9 - 3.11**
 2. Install library yang diperlukan:
-
+Note: Jangan pakai MediaPipe selain versi 0.10.21
 ```bash
 pip install opencv-python mediapipe==0.10.21 pygame gTTS numpy
 ```
@@ -99,6 +100,7 @@ python main.py
 * Tekan **Q** atau **ESC** untuk keluar.
 * Window "Isyarat Systems" bisa di-resize.
 * Gesture mapping ada di fungsi `detect_gesture()`.
+* Jangan pakai MediaPipe selain versi 0.10.21
 
 ---
 
