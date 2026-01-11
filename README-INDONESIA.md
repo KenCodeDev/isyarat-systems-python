@@ -78,7 +78,7 @@ Menjadi format **BGR**, yang digunakan oleh OpenCV.
 2. Install library yang diperlukan:
 
 ```bash
-pip install opencv-python mediapipe pygame gTTS numpy
+pip install opencv-python mediapipe==0.10.21 pygame gTTS numpy
 ```
 
 3. Jalankan program:
