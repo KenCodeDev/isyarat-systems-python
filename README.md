@@ -1,4 +1,5 @@
 # Isyarat Systems
+[🇮🇩 Bahasa Indonesia](README-INDONESIA.md)
 
 **Isyarat Systems** is a Python program that functions as a real-time **hand gesture detection system** using a camera. This program can:
 
